@@ -1,7 +1,7 @@
 {
   "info": {
     "name": "Backend Assignment API - Video Demo",
-    "description": "Run requests top to bottom. Create User, Create Teacher, and Create Session automatically save IDs into collection variables.",
+    "description": "Run requests top to bottom. Create User, Create Teacher, and Create Session save IDs into both collection and environment variables.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [
@@ -92,6 +92,7 @@
               "  const json = pm.response.json();",
               "  pm.expect(json.data).to.have.property('_id');",
               "  pm.collectionVariables.set('userId', json.data._id);",
+              "  pm.environment.set('userId', json.data._id);",
               "});"
             ]
           }
@@ -125,6 +126,7 @@
               "  const json = pm.response.json();",
               "  pm.expect(json.data).to.have.property('_id');",
               "  pm.collectionVariables.set('teacherId', json.data._id);",
+              "  pm.environment.set('teacherId', json.data._id);",
               "});"
             ]
           }
@@ -159,6 +161,7 @@
               "  pm.expect(json.data.status).to.equal('AVAILABLE');",
               "  pm.expect(json.data.userId).to.equal(null);",
               "  pm.collectionVariables.set('sessionId', json.data._id);",
+              "  pm.environment.set('sessionId', json.data._id);",
               "});"
             ]
           }
