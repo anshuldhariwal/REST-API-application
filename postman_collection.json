@@ -1,6 +1,7 @@
 {
   "info": {
-    "name": "Backend Assignment API",
+    "name": "Backend Assignment API - Video Demo",
+    "description": "Run requests top to bottom. Create User, Create Teacher, and Create Session automatically save IDs into collection variables.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [
@@ -22,16 +23,51 @@
     },
     {
       "key": "dateTimestamp",
-      "value": "1782950400000"
+      "value": "1782986400000"
     }
   ],
   "item": [
+    {
+      "name": "Docs Page",
+      "request": {
+        "method": "GET",
+        "url": "{{baseurl}}/"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Docs page loads', function () {",
+              "  pm.response.to.have.status(200);",
+              "  pm.expect(pm.response.text()).to.include('Backend Assignment API');",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
     {
       "name": "Health",
       "request": {
         "method": "GET",
         "url": "{{baseurl}}/health"
-      }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Health check passes', function () {",
+              "  pm.response.to.have.status(200);",
+              "  pm.expect(pm.response.json()).to.deep.equal({ status: 'ok' });",
+              "});"
+            ]
+          }
+        }
+      ]
     },
     {
       "name": "Create User",
@@ -48,7 +84,23 @@
           "raw": "{\n  \"fullName\": \"Anshul Dhariwal\",\n  \"email\": \"postman.user.{{$timestamp}}@example.com\",\n  \"phone\": \"9999999999\"\n}"
         },
         "url": "{{baseurl}}/users"
-      }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('User created and userId saved', function () {",
+              "  pm.response.to.have.status(201);",
+              "  const json = pm.response.json();",
+              "  pm.expect(json.data).to.have.property('_id');",
+              "  pm.collectionVariables.set('userId', json.data._id);",
+              "});"
+            ]
+          }
+        }
+      ]
     },
     {
       "name": "Create Teacher",
@@ -65,7 +117,23 @@
           "raw": "{\n  \"fullName\": \"Riya Mehta\",\n  \"email\": \"postman.teacher.{{$timestamp}}@example.com\",\n  \"specialization\": \"Mathematics\",\n  \"experience\": 6\n}"
         },
         "url": "{{baseurl}}/teachers"
-      }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Teacher created and teacherId saved', function () {",
+              "  pm.response.to.have.status(201);",
+              "  const json = pm.response.json();",
+              "  pm.expect(json.data).to.have.property('_id');",
+              "  pm.collectionVariables.set('teacherId', json.data._id);",
+              "});"
+            ]
+          }
+        }
+      ]
     },
     {
       "name": "Create Session",
@@ -82,14 +150,47 @@
           "raw": "{\n  \"teacherId\": \"{{teacherId}}\",\n  \"startTime\": \"2026-07-02T10:00:00.000Z\",\n  \"endTime\": \"2026-07-02T11:00:00.000Z\"\n}"
         },
         "url": "{{baseurl}}/sessions"
-      }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Available session created and sessionId saved', function () {",
+              "  pm.response.to.have.status(201);",
+              "  const json = pm.response.json();",
+              "  pm.expect(json.data.status).to.equal('AVAILABLE');",
+              "  pm.expect(json.data.userId).to.equal(null);",
+              "  pm.collectionVariables.set('sessionId', json.data._id);",
+              "});"
+            ]
+          }
+        }
+      ]
     },
     {
       "name": "Available Sessions",
       "request": {
         "method": "GET",
         "url": "{{baseurl}}/sessions/available?dateTimestamp={{dateTimestamp}}"
-      }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Available sessions aggregation returns the created session', function () {",
+              "  pm.response.to.have.status(200);",
+              "  const json = pm.response.json();",
+              "  pm.expect(json.data).to.be.an('array');",
+              "  pm.expect(json.data.some((session) => session._id === pm.collectionVariables.get('sessionId'))).to.equal(true);",
+              "});"
+            ]
+          }
+        }
+      ]
     },
     {
       "name": "Book Session",
@@ -106,21 +207,132 @@
           "raw": "{\n  \"userId\": \"{{userId}}\"\n}"
         },
         "url": "{{baseurl}}/sessions/{{sessionId}}/book"
-      }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Session booked', function () {",
+              "  pm.response.to.have.status(200);",
+              "  const json = pm.response.json();",
+              "  pm.expect(json.data.status).to.equal('BOOKED');",
+              "  pm.expect(json.data.userId).to.equal(pm.collectionVariables.get('userId'));",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Double Booking Conflict",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"userId\": \"{{userId}}\"\n}"
+        },
+        "url": "{{baseurl}}/sessions/{{sessionId}}/book"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Double booking is rejected', function () {",
+              "  pm.response.to.have.status(409);",
+              "  pm.expect(pm.response.json().message).to.equal('Only available sessions can be booked');",
+              "});"
+            ]
+          }
+        }
+      ]
     },
     {
       "name": "Complete Session",
       "request": {
         "method": "PATCH",
         "url": "{{baseurl}}/sessions/{{sessionId}}/complete"
-      }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Session completed', function () {",
+              "  pm.response.to.have.status(200);",
+              "  const json = pm.response.json();",
+              "  pm.expect(json.data.status).to.equal('COMPLETED');",
+              "  pm.expect(json.data.completedAt).to.be.a('string');",
+              "});"
+            ]
+          }
+        }
+      ]
     },
     {
       "name": "User Sessions",
       "request": {
         "method": "GET",
         "url": "{{baseurl}}/users/{{userId}}/sessions"
-      }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('User sessions aggregation groups completed sessions', function () {",
+              "  pm.response.to.have.status(200);",
+              "  const json = pm.response.json();",
+              "  pm.expect(json.data.upcomingSessions).to.be.an('array');",
+              "  pm.expect(json.data.completedSessions).to.be.an('array');",
+              "  pm.expect(json.data.completedSessions.some((session) => session._id === pm.collectionVariables.get('sessionId'))).to.equal(true);",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Validation Example",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"teacherId\": \"invalid-id\",\n  \"startTime\": \"2026-07-02T10:00:00.000Z\",\n  \"endTime\": \"2026-07-02T11:00:00.000Z\"\n}"
+        },
+        "url": "{{baseurl}}/sessions"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Invalid ObjectId returns 400', function () {",
+              "  pm.response.to.have.status(400);",
+              "  pm.expect(pm.response.json().message).to.equal('Teacher id must be a valid ObjectId');",
+              "});"
+            ]
+          }
+        }
+      ]
     }
   ]
 }
