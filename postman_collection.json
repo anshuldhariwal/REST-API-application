@@ -6,10 +6,6 @@
   },
   "variable": [
     {
-      "key": "baseurl",
-      "value": "http://localhost:3001"
-    },
-    {
       "key": "userId",
       "value": ""
     },
@@ -31,7 +27,7 @@
       "name": "Docs Page",
       "request": {
         "method": "GET",
-        "url": "{{baseurl}}/"
+        "url": "http://localhost:3001/"
       },
       "event": [
         {
@@ -52,7 +48,7 @@
       "name": "Health",
       "request": {
         "method": "GET",
-        "url": "{{baseurl}}/health"
+        "url": "http://localhost:3001/health"
       },
       "event": [
         {
@@ -83,7 +79,7 @@
           "mode": "raw",
           "raw": "{\n  \"fullName\": \"Anshul Dhariwal\",\n  \"email\": \"postman.user.{{$timestamp}}@example.com\",\n  \"phone\": \"9999999999\"\n}"
         },
-        "url": "{{baseurl}}/users"
+        "url": "http://localhost:3001/users"
       },
       "event": [
         {
@@ -116,7 +112,7 @@
           "mode": "raw",
           "raw": "{\n  \"fullName\": \"Riya Mehta\",\n  \"email\": \"postman.teacher.{{$timestamp}}@example.com\",\n  \"specialization\": \"Mathematics\",\n  \"experience\": 6\n}"
         },
-        "url": "{{baseurl}}/teachers"
+        "url": "http://localhost:3001/teachers"
       },
       "event": [
         {
@@ -149,7 +145,7 @@
           "mode": "raw",
           "raw": "{\n  \"teacherId\": \"{{teacherId}}\",\n  \"startTime\": \"2026-07-02T10:00:00.000Z\",\n  \"endTime\": \"2026-07-02T11:00:00.000Z\"\n}"
         },
-        "url": "{{baseurl}}/sessions"
+        "url": "http://localhost:3001/sessions"
       },
       "event": [
         {
@@ -173,7 +169,7 @@
       "name": "Available Sessions",
       "request": {
         "method": "GET",
-        "url": "{{baseurl}}/sessions/available?dateTimestamp={{dateTimestamp}}"
+        "url": "http://localhost:3001/sessions/available?dateTimestamp={{dateTimestamp}}"
       },
       "event": [
         {
@@ -206,7 +202,7 @@
           "mode": "raw",
           "raw": "{\n  \"userId\": \"{{userId}}\"\n}"
         },
-        "url": "{{baseurl}}/sessions/{{sessionId}}/book"
+        "url": "http://localhost:3001/sessions/{{sessionId}}/book"
       },
       "event": [
         {
@@ -239,7 +235,7 @@
           "mode": "raw",
           "raw": "{\n  \"userId\": \"{{userId}}\"\n}"
         },
-        "url": "{{baseurl}}/sessions/{{sessionId}}/book"
+        "url": "http://localhost:3001/sessions/{{sessionId}}/book"
       },
       "event": [
         {
@@ -260,7 +256,7 @@
       "name": "Complete Session",
       "request": {
         "method": "PATCH",
-        "url": "{{baseurl}}/sessions/{{sessionId}}/complete"
+        "url": "http://localhost:3001/sessions/{{sessionId}}/complete"
       },
       "event": [
         {
@@ -283,7 +279,7 @@
       "name": "User Sessions",
       "request": {
         "method": "GET",
-        "url": "{{baseurl}}/users/{{userId}}/sessions"
+        "url": "http://localhost:3001/users/{{userId}}/sessions"
       },
       "event": [
         {
@@ -317,7 +313,7 @@
           "mode": "raw",
           "raw": "{\n  \"teacherId\": \"invalid-id\",\n  \"startTime\": \"2026-07-02T10:00:00.000Z\",\n  \"endTime\": \"2026-07-02T11:00:00.000Z\"\n}"
         },
-        "url": "{{baseurl}}/sessions"
+        "url": "http://localhost:3001/sessions"
       },
       "event": [
         {
