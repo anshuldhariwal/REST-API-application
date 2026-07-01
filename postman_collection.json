@@ -5,7 +5,7 @@
   },
   "variable": [
     {
-      "key": "baseUrl",
+      "key": "baseurl",
       "value": "http://localhost:3001"
     },
     {
@@ -30,7 +30,7 @@
       "name": "Health",
       "request": {
         "method": "GET",
-        "url": "{{baseUrl}}/health"
+        "url": "{{baseurl}}/health"
       }
     },
     {
@@ -47,7 +47,7 @@
           "mode": "raw",
           "raw": "{\n  \"fullName\": \"Anshul Dhariwal\",\n  \"email\": \"anshul@example.com\",\n  \"phone\": \"9999999999\"\n}"
         },
-        "url": "{{baseUrl}}/users"
+        "url": "{{baseurl}}/users"
       }
     },
     {
@@ -64,7 +64,7 @@
           "mode": "raw",
           "raw": "{\n  \"fullName\": \"Riya Mehta\",\n  \"email\": \"riya@example.com\",\n  \"specialization\": \"Mathematics\",\n  \"experience\": 6\n}"
         },
-        "url": "{{baseUrl}}/teachers"
+        "url": "{{baseurl}}/teachers"
       }
     },
     {
@@ -81,14 +81,14 @@
           "mode": "raw",
           "raw": "{\n  \"teacherId\": \"{{teacherId}}\",\n  \"startTime\": \"2026-07-02T10:00:00.000Z\",\n  \"endTime\": \"2026-07-02T11:00:00.000Z\"\n}"
         },
-        "url": "{{baseUrl}}/sessions"
+        "url": "{{baseurl}}/sessions"
       }
     },
     {
       "name": "Available Sessions",
       "request": {
         "method": "GET",
-        "url": "{{baseUrl}}/sessions/available?dateTimestamp={{dateTimestamp}}"
+        "url": "{{baseurl}}/sessions/available?dateTimestamp={{dateTimestamp}}"
       }
     },
     {
@@ -105,21 +105,21 @@
           "mode": "raw",
           "raw": "{\n  \"userId\": \"{{userId}}\"\n}"
         },
-        "url": "{{baseUrl}}/sessions/{{sessionId}}/book"
+        "url": "{{baseurl}}/sessions/{{sessionId}}/book"
       }
     },
     {
       "name": "Complete Session",
       "request": {
         "method": "PATCH",
-        "url": "{{baseUrl}}/sessions/{{sessionId}}/complete"
+        "url": "{{baseurl}}/sessions/{{sessionId}}/complete"
       }
     },
     {
       "name": "User Sessions",
       "request": {
         "method": "GET",
-        "url": "{{baseUrl}}/users/{{userId}}/sessions"
+        "url": "{{baseurl}}/users/{{userId}}/sessions"
       }
     }
   ]
