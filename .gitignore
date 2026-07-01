@@ -10,6 +10,11 @@ coverage/
 .env.*
 !.env.example
 
+# Local Postman workspace/app data
+.postman/
+postman/
+*.postman_environment.json
+
 # Logs
 *.log
 .server*.log
