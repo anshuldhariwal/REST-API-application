@@ -45,7 +45,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"fullName\": \"Anshul Dhariwal\",\n  \"email\": \"anshul@example.com\",\n  \"phone\": \"9999999999\"\n}"
+          "raw": "{\n  \"fullName\": \"Anshul Dhariwal\",\n  \"email\": \"postman.user.{{$timestamp}}@example.com\",\n  \"phone\": \"9999999999\"\n}"
         },
         "url": "{{baseurl}}/users"
       }
@@ -62,7 +62,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"fullName\": \"Riya Mehta\",\n  \"email\": \"riya@example.com\",\n  \"specialization\": \"Mathematics\",\n  \"experience\": 6\n}"
+          "raw": "{\n  \"fullName\": \"Riya Mehta\",\n  \"email\": \"postman.teacher.{{$timestamp}}@example.com\",\n  \"specialization\": \"Mathematics\",\n  \"experience\": 6\n}"
         },
         "url": "{{baseurl}}/teachers"
       }
